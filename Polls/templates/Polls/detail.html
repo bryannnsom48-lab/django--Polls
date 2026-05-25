@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Polls/style.css' %}?v=4">
+{% endblock %}
+
+{% block body_class %}det-body-canvas{% endblock %}
+
+{% block title %}Vote: {{ question.question_text }}{% endblock %}
+
+{% block content %}
+<!-- UNBOXED FLUID VOTING LAYOUT -->
+<div class="det-canvas-wrapper">
+    
+    <!-- Header Navigation Utility Area -->
+    <header class="det-minimal-nav">
+        <a href="{% url 'Polls:index' %}" class="det-fluid-back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Back to Feed</span>
+        </a>
+        <div class="det-premium-badge {% if question.is_closed %}closed{% endif %}">
+            <span class="badge-pulse"></span>
+            {% if question.is_closed %}Closed{% else %}Live Stream{% endif %}
+        </div>
+    </header>
+
+    <!-- Dynamic Voting Form Field Wrapper -->
+    <form method="post" action="{% url 'Polls:votes' question.id %}" class="det-stream-form">
+        {% csrf_token %}
+        <fieldset class="det-clean-fieldset">
+            <legend class="det-title-legend">
+                <h1 class="det-premium-heading">{{ question.question_text }}</h1>
+            </legend>
+
+            <!-- STATE A: THE ACTIVE USER HAS ALREADY CAST A BALLOT -->
+            {% if existing_vote %}
+                <div class="det-minimal-alert" style="background: rgba(16, 185, 129, 0.06); border-left-color: #10b981;">
+                    <span class="det-alert-dot" style="background-color: #10b981;"></span>
+                    <p style="color: #065f46;">Your response has been securely recorded.</p>
+                </div>
+
+                <div class="det-interactive-group">
+                    {% for choice in question.choice_set.all %}
+                        <!-- Disables cursor pointer actions on card layout boxes -->
+                        <label class="det-premium-option" style="cursor: not-allowed; {% if choice == existing_vote.choice %}opacity: 1;{% else %}opacity: 0.65;{% endif %}">
+                            <input type="radio" disabled {% if choice == existing_vote.choice %}checked{% endif %} class="det-native-radio-hidden">
+                            <div class="det-option-card-inner" style="{% if choice == existing_vote.choice %}border-color: #3b82f6; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.05);{% endif %}">
+                                <!-- Locks the left-hand radiant blue indicator strip open for your selection -->
+                                <div class="det-selector-glow-indicator" style="{% if choice == existing_vote.choice %}width: 5px;{% endif %}"></div>
+                                <span class="det-option-text-label" style="{% if choice == existing_vote.choice %}color: #0f172a;{% endif %}">
+                                    {{ choice.choice_text }}
+                                    {% if choice == existing_vote.choice %}
+                                        <strong style="color: #3b82f6; font-size: 0.85rem; margin-left: 8px;">(Your Selection)</strong>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                <div class="det-submit-dock">
+                    <!-- Morph action button into a direct path tool to check visual bar metrics -->
+                    <a href="{% url 'Polls:results' question.id %}" class="det-premium-submit-btn" style="text-decoration: none; display: inline-flex; background: #64748b;">
+                        <span>View Live Analytics</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+
+            <!-- STATE B: THE USER IS A GUEST OR HAS NOT VOTED YET (ORIGINAL STATE) -->
+            {% else %}
+                {% if choice_absent %}
+                    <div class="det-minimal-alert">
+                        <span class="det-alert-dot"></span>
+                        <p>{{ choice_absent }}</p>
+                    </div>
+                {% endif %}
+
+                <!-- ACTIVE WORKING CHOICE CARDS INTERACTION GRID -->
+                <div class="det-interactive-group">
+                    {% for choice in question.choice_set.all %}
+                        <label class="det-premium-option" for="choice{{ forloop.counter }}">
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" class="det-native-radio-hidden">
+                            <div class="det-option-card-inner">
+                                <div class="det-selector-glow-indicator"></div>
+                                <span class="det-option-text-label">{{ choice.choice_text }}</span>
+                            </div>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                <div class="det-submit-dock">
+                    {% if user.is_authenticated %}
+                        {% if not question.is_closed %}
+                            <button type="submit" class="det-premium-submit-btn">
+                                <span>Confirm Choice</span>
+                                <span class="btn-arrow">→</span>
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <div class="det-auth-lockout-msg">
+                            <p>To participate in this feed, please <a href="{% url 'login' %}">Sign In</a></p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </fieldset>
+    </form>
+
+    <!-- Administrative Controls Area -->
+    <header class="det-admin-dock" style="border-top: 1px dashed #e2e8f0; margin-top: 60px; padding-top: 35px;">
+        {% if question.is_closed %}
+            <p class="det-concluded-notice">This vote stream has concluded.</p>
+        {% endif %}
+        {% if perms.Polls.close_question %}
+            <div class="det-system-controls">
+                {% if not question.is_closed %}
+                    <a href="{% url 'Polls:close_Poll' question.id %}" class="det-system-btn archive">Archive Feed</a>
+                {% else %}
+                    <a href="{% url 'Polls:open_Poll' question.id %}" class="det-system-btn reactivate">Re-activate Feed</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </header>
+</div>
+{% endblock %}

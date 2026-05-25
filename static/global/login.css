@@ -1,0 +1,279 @@
+/* ==========================================================================
+   DYNAMIC COMBINED LOGIN & LOGOUT CANVAS STYLES (Unboxed & Split)
+   ========================================================================== */
+.log-page-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    min-height: calc(100vh - 70px);
+    background-color: #f4f7fa;
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- PREMIUM LEFT-SIDE BRANDING TEXT AREA --- */
+.log-side-canvas-premium {
+    background: #0f172a; /* Premium charcoal accent background */
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 60px 12%;
+    overflow: hidden;
+}
+
+.log-glow-accent-orb {
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(6, 182, 212, 0) 75%);
+    filter: blur(50px);
+    pointer-events: none;
+}
+
+.log-canvas-badge-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #3b82f6;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.log-canvas-main-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin: 0 0 24px 0;
+}
+
+.log-canvas-description {
+    font-size: 1rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- RIGHT-SIDE FORM WORKSPACE PANEL --- */
+.log-auth-card {
+    background: transparent; /* Drops standard block container styles */
+    width: 100%;
+    max-width: 100%;
+    padding: 60px 10%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    text-align: left;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.log-form-inner-constrain {
+    width: 100%;
+    max-width: 400px;
+}
+
+.log-title {
+    font-size: 2.4rem; /* Prominent typographic sizing */
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 12px;
+    letter-spacing: -0.04em;
+}
+
+.log-subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.log-left-align-form {
+    text-align: left;
+}
+
+.log-form-group {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-form-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+/* Custom Dynamic Fields Ring Effects */
+.log-form-group input[type="text"], 
+.log-form-group input[type="password"],
+.log-form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #0f172a;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.log-form-group input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* --- PREMIUM INTERACTIVE ACTION SYSTEM --- */
+.log-submit-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background-color: #0f172a; /* Rich charcoal style replaces flat blue button */
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 10px 25px -6px rgba(15, 23, 42, 0.15);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 10px;
+}
+
+.log-submit-btn:hover {
+    background-color: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -8px rgba(15, 23, 42, 0.25);
+}
+
+.log-submit-btn:active {
+    transform: translateY(0);
+}
+
+.log-logout-btn {
+    background-color: #ef4444;
+    box-shadow: 0 10px 25px -6px rgba(239, 68, 68, 0.2);
+}
+
+.log-logout-btn:hover {
+    background-color: #dc2626;
+    box-shadow: 0 14px 30px -8px rgba(239, 68, 68, 0.3);
+}
+
+/* --- ACCOUNT BADGE COMPONENT --- */
+.log-avatar-badge {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    margin: 0 0 24px 0;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px -4px rgba(59, 130, 246, 0.3);
+}
+
+/* --- BANNER FEED ERROR BOX --- */
+.log-alert-error {
+    display: flex;
+    align-items: center;
+    background-color: rgba(239, 68, 68, 0.06);
+    border-left: 3px solid #ef4444;
+    color: #991b1b;
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* --- BOTTOM TERMINAL LINKS DOCK --- */
+.log-footer-links {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px dashed #e2e8f0;
+    font-size: 0.9rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.log-footer-links a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.15s ease;
+}
+
+.log-footer-links a:hover {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* --- RESPONSIVE STRUCTURAL OVERRIDES --- */
+@media (max-width: 900px) {
+    .log-page-container {
+        grid-template-columns: 1fr;
+    }
+    .log-side-canvas-premium {
+        display: none; /* Safely drops left panel on mobile screen layout displays */
+    }
+    .log-auth-card {
+        padding: 60px 24px;
+        text-align: left;
+    }
+    .log-title {
+        font-size: 2.1rem;
+    }
+}
+
+
+/*******************/
+/* ==========================================================================
+   MOBILE RESPONSIVENESS OVERRIDES FOR LOGIN COMPONENT
+   ========================================================================== */
+@media (max-width: 480px) {
+    .log-page-container {
+        padding: 12px; /* Reduces outer blank space so the card stays large enough */
+        min-height: calc(100vh - 120px); /* Adjusts height dynamically for mobile headers */
+    }
+
+    .log-auth-card {
+        padding: 28px 20px; /* Reduces interior padding so input lines don't get squished */
+        border-radius: 16px; /* Slightly smoother rounded corners for mobile screens */
+        margin: 20px auto;
+    }
+
+    .log-title {
+        font-size: 1.5rem; /* Reduces text size slightly so long headers don't split weirdly */
+        margin-bottom: 6px;
+    }
+
+    .log-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 24px;
+    }
+
+    /* Prevents the sign-in/out buttons from feeling overly giant on small touch screens */
+    .log-submit-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+}
+
+

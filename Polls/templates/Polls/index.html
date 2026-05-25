@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Polls/style.css' %}">
+{% endblock %}
+
+{% block body_class %}idx-body-reset{% endblock %}
+
+{% block title %}Poll App | Home{% endblock %}
+
+{% block content %}
+
+<div class="idx-app-shell">
+
+    <!-- ATMOSPHERIC BACKGROUND ELEMENTS -->
+    <div class="idx-bg-orb idx-bg-orb-one"></div>
+    <div class="idx-bg-orb idx-bg-orb-two"></div>
+    <div class="idx-bg-grid-glow"></div>
+
+    <main class="idx-main-content">
+
+        <!-- MAIN DASHBOARD GRID -->
+        <div class="idx-dashboard-grid-container">
+
+            <!-- HERO HEADER -->
+            <div class="idx-hero-header">
+
+                <div class="idx-header-text">
+
+                    <h1 class="idx-feed-title">
+                        Available Polls
+                    </h1>
+
+                    <p class="idx-subtitle">
+                        Join the conversation and cast your vote below.
+                    </p>
+
+                </div>
+
+                <div class="idx-header-action">
+
+                    <button class="idx-action-btn">
+
+                        <span style="
+                            width: 8px;
+                            height: 8px;
+                            background-color: #10b981;
+                            border-radius: 50%;
+                            display: inline-block;
+                        "></span>
+
+                        <span>
+                            {{ total_members }} Members Active
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- LEFT COLUMN -->
+            <div class="idx-left-feed-column">
+
+                <div class="idx-poll-list">
+
+                    {% for question in latest_pub_question_list %}
+
+                    <a href="{% url 'Polls:detail' question.id %}"
+                       class="idx-poll-card">
+
+                        <div class="idx-card-left">
+
+                            <div class="idx-status-dot"></div>
+
+                            <div class="idx-question-stack">
+
+                                <h2 class="idx-question-heading">
+                                    {{ question.question_text }}
+                                </h2>
+
+                                <p class="idx-question-subtext">
+                                    Active public voting session
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="idx-card-right">
+
+                            <span class="idx-btn-text">
+                                Analyze
+                            </span>
+
+                            <svg width="14"
+                                 height="14"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2.5">
+
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+
+                            </svg>
+
+                        </div>
+
+                    </a>
+
+                    {% empty %}
+
+                    <div class="idx-empty-vector-card">
+
+                        <h3 class="idx-empty-title">
+                            No Active Feeds
+                        </h3>
+
+                        <p style="
+                            margin: 0;
+                            font-size: 0.9rem;
+                        ">
+                            There are no active poll sessions running right now.
+                            Check back soon!
+                        </p>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- PAGINATION -->
+                {% if page_obj.has_other_pages %}
+
+                <nav class="idx-pagination-container">
+
+                    {% for page_num in elided_range %}
+
+                        {% if page_num == "..." %}
+
+                            <span class="idx-page-number"
+                                  style="
+                                      border: none;
+                                      background: transparent;
+                                      cursor: default;
+                                      padding: 8px 6px;
+                                  ">
+                                ...
+                            </span>
+
+                        {% else %}
+
+                            <a href="?page={{ page_num }}"
+                               class="idx-page-number {% if page_obj.number == page_num %}idx-page-active{% endif %}">
+
+                                {{ page_num }}
+
+                            </a>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </nav>
+
+                {% endif %}
+
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="idx-sidebar-wrapper">
+
+                <!-- PANEL -->
+                <div class="idx-sidebar-panel">
+
+                    <h4 class="idx-side-panel-title">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="#3b82f6"
+                             stroke-width="2.5"
+                             style="vertical-align: middle;">
+
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+
+                        </svg>
+
+                        Platform Monitor
+
+                    </h4>
+
+                    <div class="idx-side-metric-row">
+
+                        <span class="idx-side-metric-label">
+                            Server Status
+                        </span>
+
+                        <span class="idx-side-metric-value"
+                              style="color: #10b981;">
+                            Operational
+                        </span>
+
+                    </div>
+
+                    <div class="idx-side-metric-row">
+
+                        <span class="idx-side-metric-label">
+                            Global Registry
+                        </span>
+
+                        <span class="idx-side-metric-value">
+                            {{ total_members }} Accounts
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- PANEL -->
+                <div class="idx-sidebar-panel">
+
+                    <h4 class="idx-side-panel-title">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="#64748b"
+                             stroke-width="2.5"
+                             style="vertical-align: middle;">
+
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 16v-4M12 8h.01"/>
+
+                        </svg>
+
+                        Feed Info
+
+                    </h4>
+
+                    <p style="
+                        margin: 0;
+                        font-size: 0.88rem;
+                        color: #475569;
+                        line-height: 1.8;
+                    ">
+
+                        Welcome to the official
+                        <strong>PollSync</strong>
+                        telemetry dashboard.
+
+                        Standard voters can view active trends and cast secure
+                        ballots across any public feed streaming above.
+
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}

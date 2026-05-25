@@ -1,0 +1,85 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'global/login.css' %}?v=6"> 
+{% endblock %} 
+
+{% block title %}Account Identity{% endblock %} 
+
+{% block content %} 
+<!-- UNBOXED INTERACTIVE SCREEN LAYOUT -->
+<div class="log-page-container"> 
+
+    <!-- VISUAL SIDE CANVAS PANELS (Fills the vast empty void) -->
+    <div class="log-side-canvas-premium">
+        <div class="log-glow-accent-orb"></div>
+        <div class="log-canvas-text-meta">
+            <span class="log-canvas-badge-tag">Streaming Platform</span>
+            <h2 class="log-canvas-main-title">Shape the flow of perspective.</h2>
+            <p class="log-canvas-description">Connect with your workspace to participate in live polling feeds, track responsive metric paths, and interact with live data analytics streams.</p>
+        </div>
+    </div>
+
+    <!-- FORM CONTROL FLOWS PANEL -->
+    <div class="log-auth-card"> 
+        <div class="log-form-inner-constrain">
+
+            <!-- STATE A: WORKSPACE OVERVIEW PANEL (IF USER IS ALREADY LOGGED IN) --> 
+            {% if user.is_authenticated %} 
+                <div class="log-avatar-badge"> 
+                    {{ user.username|slice:":1" }} 
+                </div> 
+                <h1 class="log-title">Active Session</h1> 
+                <p class="log-subtitle"> 
+                    You are currently signed in as <strong>{{ user.username }}</strong>. To switch profiles or leave your workspace, terminate the session below. 
+                </p> 
+                
+                <form method="post" action="{% url 'logout' %}"> 
+                    {% csrf_token %} 
+                    <button type="submit" class="log-submit-btn log-logout-btn">Sign Out of Account</button> 
+                </form> 
+                
+                <footer class="log-footer-links"> 
+                    <p>Or return safely back to the <a href="{% url 'Polls:index' %}">Poll Feed</a></p> 
+                </footer> 
+
+            <!-- STATE B: INPUT FIELDS SIGN IN FORM (IF GUEST VISITOR) --> 
+            {% else %} 
+                <h1 class="log-title">Welcome back</h1> 
+                <p class="log-subtitle">Sign in to your account to participate and analyze live feeds.</p> 
+
+                {% if form.errors %} 
+                    <div class="log-alert-error"> 
+                        Your username and password didn't match. Please try again. 
+                    </div> 
+                {% endif %} 
+
+                <form method="post" action="{% url 'login' %}" class="log-left-align-form"> 
+                    {% csrf_token %} 
+                    <div class="log-form-group"> 
+                        <label for="{{ form.username.id_for_label }}">Username</label> 
+                        {{ form.username }} 
+                    </div> 
+                    <div class="log-form-group"> 
+                        <label for="{{ form.password.id_for_label }}">Password</label> 
+                        {{ form.password }} 
+                    </div> 
+                    
+                    <button type="submit" class="log-submit-btn">Sign In to Dashboard</button> 
+                    <input type="hidden" name="next" value="{{ next }}"> 
+                </form> 
+
+               <footer class="log-footer-links" style="text-align: center;">
+                    <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+                    <!-- This new line is added so users can jump straight to registration -->
+                    <p style="margin-top: 12px;">New to the feed? <a href="{% url 'Polls:SignUp' %}">Create an account</a></p>
+                </footer>
+
+            {% endif %} 
+
+        </div>
+    </div>
+
+</div> 
+{% endblock %}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'Polls/images/BackGroundImage.png' %}">
+    <link rel="stylesheet" href="{% static 'Polls/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls App | confirm close</title>
+</head>
+    <body>
+        <div class="cls-viewport">
+            <div class="cls-surface">
+                
+                <!-- Header -->
+                <header class="cls-header">
+                    <div class="cls-alert-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <h1 class="cls-title">Finish this Poll?</h1>
+                    <p class="cls-desc">You are about to finalize the voting process for this topic.</p>
+                </header>
+
+                <!-- Seamless Content Section -->
+                <div class="cls-body">
+                    <h2 class="cls-question-label">Question</h2>
+                    <p class="cls-question-main">{{ question.question_text }}</p>
+                    
+                    <div class="cls-choice-stack">
+                        <h3 class="cls-choice-label">Options Included</h3>
+                        <div class="cls-pill-container">
+                            {% for choice in question.choice_set.all %}
+                                <span class="cls-pill">{{ choice.choice_text }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Area -->
+                <footer class="cls-actions">
+                    <form method="post" class="cls-form">
+                        {% csrf_token %}
+                        <button type="submit" class="cls-btn-confirm">Yes, Close Poll</button>
+                    </form>
+                    <a href="{% url 'Polls:detail' question.id %}" class="cls-btn-back">Go Back</a>
+                </footer>
+
+            </div>
+        </div>
+    </body>
+</html>

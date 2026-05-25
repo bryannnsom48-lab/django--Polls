@@ -1,0 +1,60 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'Polls/style.css' %}?v=3"> 
+{% endblock %} 
+
+{% block body_class %}res-body{% endblock %} 
+{% block title %}Results - {{ question.question_text }}{% endblock %} 
+
+{% block content %} 
+<div class="res-page-layout"> 
+    <!-- MAIN CONTENT AREA --> 
+    <main class="res-main-content"> 
+        <header class="res-page-header"> 
+            <div class="res-breadcrumb">Analytics / Question #{{ question.id }}</div> 
+            <h1 class="res-main-heading">{{ question.question_text }}</h1> 
+        </header> 
+
+        <section class="res-data-grid"> 
+            {% for choice in question.choice_set.all %} 
+            <div class="res-data-row"> 
+                <div class="res-row-info"> 
+                    <span class="res-choice-name">{{ choice.choice_text }}</span> 
+                    <span class="res-vote-value">{{ choice.votes }} votes</span> 
+                </div> 
+                <div class="res-progress-track"> 
+                    <!-- Safe dynamic math using your new model property -->
+                    {% if question.total_votes > 0 %}
+                        <div class="res-progress-fill" style="width: {% widthratio choice.votes question.total_votes 100 %}%"></div>
+                    {% else %}
+                        <div class="res-progress-fill" style="width: 0%;"></div>
+                    {% endif %}
+                </div> 
+            </div> 
+            {% endfor %} 
+        </section> 
+
+        <footer class="res-action-footer"> 
+            <a href="{% url 'Polls:detail' question.id %}" class="res-back-btn">← Back to Voting</a> 
+        </footer> 
+    </main> 
+
+    <!-- SIDEBAR/EXTRA INFO SECTION --> 
+    <aside class="res-sidebar"> 
+        <div class="res-side-box"> 
+            <h3 class="res-side-title">Quick Stats</h3> 
+            <p class="res-side-p">This poll is currently active and receiving live updates.</p> 
+        </div> 
+        <div class="res-side-box"> 
+            <h3 class="res-side-title">Share</h3> 
+            <div class="res-social-placeholders"> 
+                <div class="res-social-dot"></div> 
+                <div class="res-social-dot"></div> 
+                <div class="res-social-dot"></div> 
+            </div> 
+        </div> 
+    </aside> 
+</div> 
+{% endblock %}

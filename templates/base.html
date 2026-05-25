@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'Polls/images/BackGroundImage.png' %}">
+    
+    <!-- Core App Stylesheet -->
+    <link rel="stylesheet" href="{% static 'Polls/style.css' %}">
+    
+    <!-- Crisp Google Inter Typography Font -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+    <title>{% block title %}PollSync{% endblock %}</title>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    <!-- UPGRADED PREMIUM BLUR NAVIGATION BAR -->
+    <nav class="res-top-nav-premium">
+        <div class="res-nav-left">
+            <span class="res-app-logo">Poll<span>Sync</span></span>
+        </div>
+        
+        <div class="res-nav-right-premium">
+            <!--  THE PLUGGABLE PROFESSIONAL FIX -->
+            {% block nav_home_link %}
+                <a href="{% url 'Polls:index' %}" class="res-nav-link">Poll Feed</a>
+            {% endblock %}
+
+            
+            <span class="res-nav-divider-premium"></span>
+
+            <div class="res-auth-group-premium">
+                {% if user.is_authenticated %}
+                    <span class="res-user-status-premium">
+                        Logged in as <strong>{{ user.username }}</strong>
+                    </span>
+                    <form action="{% url 'logout' %}" method="post" class="res-logout-form-premium">
+                        {% csrf_token %}
+                        <button type="submit" class="res-logout-submit-btn-premium">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="res-nav-link-premium">Login</a>
+                {% endif %}
+            </div>
+            
+            <div class="res-user-avatar"></div>
+        </div>
+    </nav>
+
+    <!-- CENTRAL LAYOUT INJECTION BLOCK FOR OTHER PAGES -->
+    <div class="res-main-wrapper-premium">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- GLOBAL PREMIUM FOOTER (The Under Part) -->
+    <footer class="res-footer-premium">
+        <div class="res-footer-left-premium">
+            <p>&copy; 2026 PollSync. Built with pride.</p>
+        </div>
+        <div class="res-footer-right-premium">
+            <a href="#" class="res-footer-link-premium">Terms</a>
+            <span class="res-footer-dot-premium">&middot;</span>
+            <a href="#" class="res-footer-link-premium">Privacy</a>
+            <span class="res-footer-dot-premium">&middot;</span>
+            <a href="#" class="res-footer-link-premium">System Status</a>
+        </div>
+    </footer>
+
+</body>
+</html>

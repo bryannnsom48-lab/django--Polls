@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <link rel="icon" type="image/png" href="{% static 'Polls/images/BackGroundImage.png' %}">
+        <link rel="stylesheet" href="{% static 'Polls/style.css' %}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Polls App | Confirm open</title>
+    </head>
+    <body>
+        <div class="opn-viewport">
+            <div class="opn-card">
+                
+                <!-- Header Section -->
+                <header class="opn-header">
+                    <div class="opn-icon-circle">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+                    </div>
+                    <h1 class="opn-title">Reactivate Poll</h1>
+                    <p class="opn-subtitle">This will allow users to start casting votes again immediately.</p>
+                </header>
+
+                <!-- Summary Section -->
+                <div class="opn-summary">
+                    <span class="opn-meta-label">Selected Question</span>
+                    <h2 class="opn-question-display">{{ question.question_text }}</h2>
+                    
+                    <div class="opn-choice-cloud">
+                        {% for choice in question.choice_set.all %}
+                            <span class="opn-tag">{{ choice.choice_text }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Action Section -->
+                <footer class="opn-footer">
+                    <form method="post" class="opn-form">
+                        {% csrf_token %}
+                        <button type="submit" class="opn-btn-primary">Yes, Reopen Now</button>
+                    </form>
+                    <a href="{% url 'Polls:detail' question.id %}" class="opn-btn-secondary">Keep Archive</a>
+                </footer>
+
+            </div>
+        </div>
+    </body>
+</html>
