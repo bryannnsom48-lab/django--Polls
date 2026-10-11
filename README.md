@@ -30,8 +30,10 @@ Make sure you have Python and Git installed.
 2. **Create and activate a virtual environment:**
    ```bash
    python -m venv polls_venv
-   # On Windows:
+   # On Windows: Command Prompt;
    .\polls_venv\Scripts\activate
+   # batch:
+   source /polls_venv/Scripts/activate
    ```
 
 3. **Run database migrations:**
